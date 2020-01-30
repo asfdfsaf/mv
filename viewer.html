@@ -583,20 +583,20 @@ function putRow(row) {
 function setDefaults() {
     var oldXML = currentXML;
     stopJob();
-    setLimits(new BigDecimal("-3.0"), new BigDecimal("3.0"), new BigDecimal("-3.0"), new BigDecimal("3.0"), false);
+    setLimits(new BigDecimal("-1.0"), new BigDecimal("1.0"), new BigDecimal("-0.5"), new BigDecimal("2.0"), false);
     stretchPalette = false;
-    fixedPaletteLength = 50;
-    maxIterations = 500;
+    fixedPaletteLength = 100;
+    maxIterations = 1000;
     paletteOffsetFraction = 0;
     palette = new Palette();
     //palette = new Palette("RGB",[0,0.17,0.83,1],[[0,0,0],[1,0,0],[1,1,0],[1,1,1]]);
     createPaletteColors();
-    document.getElementById("maxIterSelect").value = "500";
+    document.getElementById("maxIterSelect").value = "1000";
     document.getElementById("custommaxiter").style.display = "none";
     document.getElementById("custompallen").style.display = "none";
     document.getElementById("custoffset").style.display = "none";
     document.getElementById("customsize").style.display = "none";
-    document.getElementById("paletteLengthSelect").value = "50";
+    document.getElementById("paletteLengthSelect").value = "100";
     document.getElementById("paletteOffsetSelect").value = "0";
     document.getElementById("imagesize").value = "800 600";
     if (canvas.width != 800 || canvas.height != 600) {

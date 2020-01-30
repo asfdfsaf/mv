@@ -50,11 +50,14 @@ function countIterations( /* double */ x, /* double */ y) {
     y=t;
     var zx = x;
     var zy = y;
-    var n = 20;
+    var n = 50;
+    var p = 100;
     while (count < maxIterations && zx*zx + zy*zy < 20) {
-        if (0==((count+1)%n)) {
-            x += zx*count/n/Math.PI;
-            y += zy*count/n/Math.PI;
+        if (0==(count+1)%n) {
+            x += zx*count/p;
+            y += zy*count/p;
+            n--;
+            p++;
         }
         if (true) {
             var new_zx = zx*zx - zy*zy + x;
