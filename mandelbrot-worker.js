@@ -1,18 +1,13 @@
 var /* BigDecimal */ xmin, dx, yval;
 var /* int */ columnCount, rowNumber, maxIterations;
 var /* boolean */ highPrecision;
-
 var /* int */ taskNumber, jobNumber, workerNumber;
-
 var /* int[] */ iterationCounts;
-
 var ArrayType = this.Uint32Array || Array;
-
-
 
 onmessage = function(msg) {
    var data = msg.data;
-   if ( data[0] == "setup" ) { 
+   if ( data[0] == "setup" ) {
        jobNumber = data[1];
        maxIterations = data[2];
        highPrecision = data[3];
@@ -42,16 +37,15 @@ onmessage = function(msg) {
    }
 }
 
-
-function countIterations( /* double */ x, /* double */ y) {
+function countIterations(x, y) {
     var count = 0;
     var t = x;
     x=-y;
     y=t;
     var zx = x;
     var zy = y;
-    var n = 50;
-    var p = 100;
+    var n = 100;
+    var p = 200;
     while (count < maxIterations && zx*zx + zy*zy < 20) {
         if (0==(count+1)%n) {
             x += zx*count/p;
@@ -59,19 +53,13 @@ function countIterations( /* double */ x, /* double */ y) {
             n--;
             p++;
         }
-        if (true) {
-            var new_zx = zx*zx - zy*zy + x;
-            zy = 2*zx*zy + y;
-            zx = new_zx;
-        } else {
-            // Euler Face
-            var new_zx = Math.cos(zx*zx - zy*zy) + zx;
-            zy =  Math.sin(2*zx*zy) + zy;
-            zx = new_zx;
-        }    
+        var new_zx = zx*zx - zy*zy + x;
+        zy = 2*zx*zy + y;
+        zx = new_zx;
         count++;
     }
-    return (count < maxIterations)? count : -1 ;   
+    return count < maxIterations ? count : Math.floor((Math.atan(zy/zx)+Math.PI/2)/Math.PI*count);
+    //return (count < maxIterations)? count : -1 ;
 }
 
 function countIterationsHP( /* Uint32Array */ x, /* Uint32Array */ y) {
@@ -98,13 +86,13 @@ function countIterationsHP( /* Uint32Array */ x, /* Uint32Array */ y) {
         arraycopy(work2,0,zx,0,chunks);  // zx = work2
         count++;
     }
-    return (count < maxIterations)? count : -1 ;   
+    return (count < maxIterations)? count : -1 ;
 }
 
 function arraycopy( sourceArray, sourceStart, destArray, destStart, count ) {
    for (var i = 0; i < count; i++) {
        destArray[destStart + i] = sourceArray[sourceStart + i];
-   } 
+   }
 }
 
 
